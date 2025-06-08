@@ -20,6 +20,8 @@ def fetch_sheet():
         return jsonify({"error": "Veri çekilemedi", "details": response.text}), 500
 
     return jsonify(response.json())
-
+@app.route("/", methods=["GET"])
+def root():
+    return jsonify({"status": "ok", "message": "GPT Sheets sunucusu aktif."})
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
