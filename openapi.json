@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://gpt-sheets-server-uq7w.onrender.com/"
+      "url": "https://gpt-sheets-server-uq7w.onrender.com"
     }
   ],
   "paths": {
@@ -39,28 +39,23 @@
           }
         },
         "responses": {
-  "200": {
-    "description": "Veriler başarıyla döndürüldü.",
-    "content": {
-      "application/json": {
-        "schema": {
-          "type": "object",
-          "properties": {
-            "values": {
-              "type": "array",
-              "items": {
-                "type": "array",
-                "items": { "type": "string" }
-              },
-              "description": "Google Sheets verileri"
-            }
-          },
-          "required": ["values"]
-        }
-      }
-    }
-  }
-}
+          "200": {
+            "description": "Veriler başarıyla döndürüldü.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "description": "Google Sheets verileri"
+                    }
+                  },
+                  "required": ["values"]
                 }
               }
             }
