@@ -39,12 +39,28 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "Veriler başarıyla döndürüldü.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object"
+  "200": {
+    "description": "Veriler başarıyla döndürüldü.",
+    "content": {
+      "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "description": "Google Sheets verileri"
+            }
+          },
+          "required": ["values"]
+        }
+      }
+    }
+  }
+}
                 }
               }
             }
