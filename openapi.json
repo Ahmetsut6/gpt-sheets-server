@@ -1,0 +1,56 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "GPT Sheets API",
+    "version": "1.0.0",
+    "description": "Bu API, GPT'nin bir Google Sheets dokümanından veri çekmesine olanak sağlar."
+  },
+  "servers": [
+    {
+      "url": "https://gpt-sheets-server-uq7w.onrender.com/"
+    }
+  ],
+  "paths": {
+    "/fetch-sheet": {
+      "post": {
+        "operationId": "getSheetData",
+        "summary": "Google Sheets verisini getir",
+        "description": "Belirtilen Sheet ID ve hücre aralığına göre veri döner.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sheet_id": {
+                    "type": "string",
+                    "description": "Google Sheet dosyasının ID’si"
+                  },
+                  "range": {
+                    "type": "string",
+                    "description": "Veri aralığı örn: Sayfa1!A1:Z10",
+                    "default": "Sayfa1!A1:Z100"
+                  }
+                },
+                "required": ["sheet_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Veriler başarıyla döndürüldü.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
