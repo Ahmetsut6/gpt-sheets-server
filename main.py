@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
 import requests
+import os
 
 app = Flask(__name__)
 
-GOOGLE_SHEETS_API_KEY = "AIzaSyBx533BlZzo54lAcyh31nJW6UNeoXHaWfw"
+# API key artık .env veya Render ortam değişkeninden alınır
+GOOGLE_SHEETS_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 @app.route("/fetch-sheet", methods=["POST"])
 def fetch_sheet():
@@ -13,6 +15,9 @@ def fetch_sheet():
 
     if not sheet_id:
         return jsonify({"error": "Sheet ID eksik"}), 400
+
+    if not GOOGLE_SHEETS_API_KEY:
+        return jsonify({"error": "API key tanımlı değil"}), 500
 
     url = f"https://sheets.googleapis.com/v4/spreadsheets/{sheet_id}/values/{range_name}?key={GOOGLE_SHEETS_API_KEY}"
     response = requests.get(url)
