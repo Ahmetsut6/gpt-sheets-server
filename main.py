@@ -22,6 +22,25 @@ def fetch_sheet():
     return jsonify(response.json())
 @app.route("/", methods=["GET"])
 def root():
-    return jsonify({"status": "ok", "message": "GPT Sheets sunucusu aktif."})
+    return jsonify({
+        "openapi": "3.0.0",
+        "info": {
+            "title": "GPT Sheets API",
+            "version": "1.0.0"
+        },
+        "paths": {
+            "/fetch-sheet": {
+                "post": {
+                    "summary": "Google Sheets verisi alır",
+                    "parameters": [],
+                    "responses": {
+                        "200": {
+                            "description": "Veri alındı"
+                        }
+                    }
+                }
+            }
+        }
+    })
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
