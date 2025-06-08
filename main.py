@@ -20,22 +20,45 @@ def fetch_sheet():
         return jsonify({"error": "Veri çekilemedi", "details": response.text}), 500
 
     return jsonify(response.json())
-@app.route("/", methods=["GET"])
-def root():
+@app.route("/openapi.json", methods=["GET"])
+def openapi_spec():
     return jsonify({
         "openapi": "3.0.0",
         "info": {
             "title": "GPT Sheets API",
             "version": "1.0.0"
         },
+        "servers": [
+            {
+                "url": "https://gpt-sheets-server-uq7w.onrender.com"
+            }
+        ],
         "paths": {
             "/fetch-sheet": {
                 "post": {
-                    "summary": "Google Sheets verisi alır",
-                    "parameters": [],
+                    "summary": "Google Sheets verisini getir",
+                    "requestBody": {
+                        "required": True,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "sheet_id": {
+                                            "type": "string"
+                                        },
+                                        "range": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["sheet_id"]
+                                }
+                            }
+                        }
+                    },
                     "responses": {
                         "200": {
-                            "description": "Veri alındı"
+                            "description": "Başarılı yanıt"
                         }
                     }
                 }
