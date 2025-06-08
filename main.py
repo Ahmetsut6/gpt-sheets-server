@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, Response, jsonify
 import requests
 import os
+import json
 
 app = Flask(__name__)
 
-# API key artık .env veya Render ortam değişkeninden alınır
+# Ortam değişkeninden API key'i al
 GOOGLE_SHEETS_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 @app.route("/fetch-sheet", methods=["POST"])
@@ -32,55 +33,15 @@ def fetch_sheet():
 
 @app.route("/openapi.json", methods=["GET"])
 def openapi_spec():
-    return jsonify({
-        "openapi": "3.0.0",
-        "info": {
-            "title": "GPT Sheets API",
-            "version": "1.0.0"
-        },
-        "servers": [
-            {
-                "url": "https://gpt-sheets-server-uq7w.onrender.com"
-            }
-        ],
-        "paths": {
-            "/fetch-sheet": {
-                "post": {
-                    "summary": "Google Sheets verisini getir",
-                    "requestBody": {
-                        "required": True,
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "sheet_id": {
-                                            "type": "string"
-                                        },
-                                        "range": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": ["sheet_id"]
-                                }
-                            }
-                        }
-                    },
-                    "responses": {
-                        "200": {
-                            "description": "Başarılı yanıt"
-                        }
-                    }
-                }
-            }
-        }
-    })
+    with open("openapi.json", "r") as f:
+        content = f.read()
+    return Response(content, mimetype="application/json")
 
 @app.route("/", methods=["GET"])
 def root():
     return jsonify({
         "status": "ok",
-        "message": "GPT Sheets sunucusu aktif."
+        "message": "GPT Sheets sunucusu çalışıyor."
     })
 
 if __name__ == "__main__":
