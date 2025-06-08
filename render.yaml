@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gpt-sheets-server
+    env: python
+    buildCommand: ""
+    startCommand: "python main.py"
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: GOOGLE_SHEETS_API_KEY
+        value: BURAYA_SENİN_API_KEYİNİ_YAZ
